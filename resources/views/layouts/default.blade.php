@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@section('title') Archytas @show</title>
+    <title>@section('title') Mon App @show</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -63,9 +63,9 @@ desired effect
         <!-- Logo -->
         <a href="{{ route('home_page') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>5</b>FT</span>
+            <span class="logo-mini"><b>M</b>A</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>5FT</b>GoCardless</span>
+            <span class="logo-lg"><b>Mon</b>App</span>
         </a>
 
         <!-- Header Navbar -->
