@@ -40,7 +40,7 @@ class BackEndMenu
          *   'displayChildren' => true,
          *  ]);
          */
-        $menu->addChild('menu-item-1', [
+        $m1 = $menu->addChild('menu-item-1', [
             'label' => 'Menu 1',
             'uri' => route('home_page'),
             'extras' => [
@@ -51,6 +51,30 @@ class BackEndMenu
                 ]
             ]
         ]);
+
+        $m1->addChild('menu-item-11', [
+            'label' => 'Menu 11',
+            'uri' => route('home_page'),
+            'extras' => [
+                'icon' => 'fa fa-circle-o',
+                'current' => true,
+                'routes' => [
+                    ['route' => 'home_page'],
+                ]
+            ]
+        ]);
+
+        $m1->addChild('menu-item-12', [
+            'label' => 'Menu 12',
+            'uri' => route('home_page'),
+            'extras' => [
+                'icon' => 'fa fa-circle-o',
+                'routes' => [
+                    ['route' => 'home_page'],
+                ]
+            ]
+        ]);
+
         $menu->addChild('Menu 2', [
             'uri' => route('home_page'),
             'extras' => [

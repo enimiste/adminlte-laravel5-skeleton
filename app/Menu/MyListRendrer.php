@@ -103,10 +103,48 @@ class MyListRendrer implements RendererInterface
     protected function buildHtml(ItemInterface $root, array $options)
     {
         $html = sprintf('<ul class="%s">', $root->getAttribute('class'));
+        $obj = $this;
         $html = collect($root->getChildren())
-            ->reduce(function ($acc, ItemInterface $item) use ($options, $root) {
+            ->reduce(function ($acc, ItemInterface $item) use ($options, $root, $obj) {
                 $treeview = $root->getChildrenAttribute('class');
                 $class = sprintf('class="%s %s"', $treeview, $item->isCurrent() ? $options['currentClass'] : '');
+                $html = sprintf('<li %s>', $class);
+                $linkAttr = collect($item->getLinkAttributes())
+                    ->map(function ($val, $k) {
+                        return ['name' => $k, 'value' => $val];
+                    })
+                    ->reduce(function ($a, $attr) {
+                        return $a .= sprintf(' %s="%s" ', $attr['name'], $attr['value']);
+                    }, '');
+                $icon = array_get($item->getExtras(), 'icon', '');
+                if ($icon != '')
+                    $icon = sprintf('<i class="%s"></i>', $icon);
+                $label = sprintf('%s<span>%s</span>', $icon, $item->getLabel());
+                $showChild = '';
+                $childs = '';
+                if ($item->hasChildren()) {
+                    $showChild = '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>';
+                    $childs = $obj->buildChildHtml($item);
+                }
+                $html .= sprintf('<a href="%s" %s>%s %s</a>%s', $item->getUri(), $linkAttr, $label, $showChild, $childs);
+                $html .= '</li>';
+                return $acc . $html;
+            }, $html);
+        $html .= '</ul>';
+        return $html;
+    }
+
+    /**
+     * @param ItemInterface $root
+     * @param array $options
+     * @return mixed|string
+     */
+    protected function buildChildHtml(ItemInterface $root)
+    {
+        $html = '<ul class="treeview-menu">';
+        $html = collect($root->getChildren())
+            ->reduce(function ($acc, ItemInterface $item) use ($root) {
+                $class = sprintf('class=" %s "', $item->isCurrent() ? 'active' : '');
                 $html = sprintf('<li %s>', $class);
                 $linkAttr = collect($item->getLinkAttributes())
                     ->map(function ($val, $k) {
