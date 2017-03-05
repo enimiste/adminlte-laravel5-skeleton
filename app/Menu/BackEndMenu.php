@@ -44,6 +44,7 @@ class BackEndMenu
             'label' => 'Menu 1',
             'uri' => route('home_page'),
             'extras' => [
+                'icon' => 'fa fa-files-o',
                 'current' => true,
                 'routes' => [
                     ['route' => 'home_page'],
@@ -52,6 +53,9 @@ class BackEndMenu
         ]);
         $menu->addChild('Menu 2', [
             'uri' => route('home_page'),
+            'extras' => [
+                'icon' => 'fa fa-files-o',
+            ]
         ]);
 
         $menu->addChild('Open in new tab', [
@@ -59,6 +63,9 @@ class BackEndMenu
             'linkAttributes' => [
                 'target' => '_blank',
             ],
+            'extras' => [
+                'icon' => 'fa fa-files-o',
+            ]
         ]);
 
 

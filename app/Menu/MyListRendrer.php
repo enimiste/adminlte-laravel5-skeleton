@@ -115,7 +115,11 @@ class MyListRendrer implements RendererInterface
                     ->reduce(function ($a, $attr) {
                         return $a .= sprintf(' %s="%s" ', $attr['name'], $attr['value']);
                     }, '');
-                $html .= sprintf('<a href="%s" %s>%s</a>', $item->getUri(), $linkAttr, $item->getLabel());
+                $icon = array_get($item->getExtras(), 'icon', '');
+                if ($icon != '')
+                    $icon = sprintf('<i class="%s"></i>', $icon);
+                $label = sprintf('%s<span>%s</span>', $icon, $item->getLabel());
+                $html .= sprintf('<a href="%s" %s>%s</a>', $item->getUri(), $linkAttr, $label);
                 $html .= '</li>';
                 return $acc . $html;
             }, $html);
