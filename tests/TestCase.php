@@ -18,10 +18,15 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
+        /** @var \Illuminate\Foundation\Application $app */
         $app = require __DIR__ . '/../bootstrap/app.php';
 
+        $app->bind('running_from_artisan', function () {
+            return true;
+        });
+        
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-
+        
         return $app;
     }
 }

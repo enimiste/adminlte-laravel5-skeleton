@@ -70,4 +70,39 @@ class AssertThat extends BaseAssert
         }
     }
 
+    public static function countGreaterThan($array, $number, $message = '')
+    {
+        static::greaterThan(
+            count($array),
+            $number,
+            $message ?: sprintf('Expected an array to contain > %d elements. Got: %d.', $number, count($array))
+        );
+    }
+
+    public static function countGreaterThanEq($array, $number, $message = '')
+    {
+        static::greaterThanEq(
+            count($array),
+            $number,
+            $message ?: sprintf('Expected an array to contain >= %d elements. Got: %d.', $number, count($array))
+        );
+    }
+
+    public static function countLessThan($array, $number, $message = '')
+    {
+        static::lessThan(
+            count($array),
+            $number,
+            $message ?: sprintf('Expected an array to contain < %d elements. Got: %d.', $number, count($array))
+        );
+    }
+
+    public static function countLessThanEq($array, $number, $message = '')
+    {
+        static::lessThanEq(
+            count($array),
+            $number,
+            $message ?: sprintf('Expected an array to contain <= %d elements. Got: %d.', $number, count($array))
+        );
+    }
 }

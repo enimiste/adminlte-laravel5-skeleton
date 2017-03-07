@@ -38,4 +38,14 @@ class LoginController extends Controller
     {
         return route('home_page');
     }
+
+    /**
+     * After login
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        return route('home_page');
+    }
 }

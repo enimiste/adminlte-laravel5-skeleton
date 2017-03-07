@@ -9,6 +9,9 @@ use Illuminate\Support\ServiceProvider;
 use App\View\Composer\MenuComposer;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
+use App\Business\Contracts\TokenGeneratorInterface;
+use App\Business\Generators\RamseyUuidTokenGenerator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -98,6 +101,15 @@ class AppServiceProvider extends ServiceProvider
                 else return 'NOT_AUTHENTICATED';
             }
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generators
+        |--------------------------------------------------------------------------
+        |
+        |
+        */
+        $this->app->singleton(TokenGeneratorInterface::class, RamseyUuidTokenGenerator::class);
 
         /*
         |--------------------------------------------------------------------------

@@ -36,7 +36,8 @@
       "Test\\": "tests/"
     },
     "files": [
-      "app/helpers.php"
+      "app/helpers.php",
+      "app/view_helpers.php"
     ]
   },
   "autoload-dev": {
