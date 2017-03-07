@@ -1,9 +1,10 @@
 {
-  "name": "nickelit/archytas-produits-soldes",
-  "description": "Partie site web du projet produits soldés",
+  "name": "enimiste/adminlte-laravel5-skeleton",
+  "description": "Adminlte laravel 5.3 skeleton web app",
   "keywords": [
     "framework",
-    "laravel"
+    "laravel",
+    "adminlte"
   ],
   "license": "MIT",
   "type": "project",
