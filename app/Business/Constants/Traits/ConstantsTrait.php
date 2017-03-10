@@ -9,6 +9,9 @@
 namespace App\Business\Constants\Traits;
 
 
+use App\Business\Assert\AssertThat;
+use App\Business\Exception\BusinessException;
+
 trait ConstantsTrait
 {
 
@@ -38,5 +41,15 @@ trait ConstantsTrait
     public function isValid($const)
     {
         return in_array($const, $this->asArray());
+    }
+
+    /**
+     * Check whither the $const is a valid value
+     *
+     * @throws BusinessException
+     */
+    public function validate($const)
+    {
+        AssertThat::true($this->isValid($const), 'Invalid const value : ' . $const);
     }
 }

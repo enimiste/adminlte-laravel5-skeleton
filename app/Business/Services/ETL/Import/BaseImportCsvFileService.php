@@ -11,6 +11,7 @@ namespace App\Business\Services\ETL\Import;
 
 use App\Business\Assert\AssertThat;
 use App\Business\Constants\ImportedFileState;
+use App\Business\Constants\ImportedLineState;
 use App\Business\Contracts\BusinessInterface;
 use App\Business\Contracts\TokenGeneratorInterface;
 use App\Business\Exception\BusinessException;
@@ -18,6 +19,7 @@ use App\Business\Exception\BusinessImportException;
 use App\Models\ImportedFile;
 use App\Models\ImportedFileLog;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Model;
 use League\Csv\Reader;
 
 abstract class BaseImportCsvFileService implements BusinessInterface
@@ -142,7 +144,72 @@ abstract class BaseImportCsvFileService implements BusinessInterface
      * @param string $rowKey
      * @param $importedFileId
      *
-     * @return
+     * @return mixed the saved object
      */
-    abstract public function validateAndSaveLine(array $row, $rowKey, $importedFileId);
+    public function validateAndSaveLine(array $row, $rowKey, $importedFileId)
+    {
+        $this->validateColumnsCount($row);
+
+        $columns = $this->getColumnsSpec($rowKey);
+        unset($columns['id']);
+        
+        $line = $this->makeNewLineObject();
+        $line->id = $this->tokenGenerator->nextToken();
+
+        foreach ($columns as $col => $map) {
+            if (is_callable($map)) {
+                $line->$col = call_user_func($map, $line);
+            } else {
+                if (is_array($map)) {
+                    $index = $map['rang'];
+                    $transform = function ($d) use ($map) {
+                        $v = call_user_func($map['transform'], $d);
+                        return trim($v);
+                    };
+                } else {
+                    $index = $map;
+                    $transform = 'trim';
+                }
+                $val = array_nth($row, $index);
+                $line->$col = ($val == null) ? $val : call_user_func($transform, $val);
+            }
+        }
+
+        $line->state = ImportedLineState::IMPORTED;
+        $line->imported_file_id = $importedFileId;
+        $line->save();
+
+        return $line;
+    }
+
+    /**
+     * @param array $row
+     * @throws BusinessException
+     */
+    abstract public function validateColumnsCount(array $row);
+
+    /**
+     * The keys must much the line class columns name
+     * The array contains one or many columns mapping. The key is the column name and the value has many formats :
+     *  - [ 'col' => int ] : the int value will be used to fetch the value from the row in the index defined by this value
+     *  - [ 'col' => [ 'rang' => int, 'transform' => function($v) { return $v; }]] : same as the first format but here
+     *       the service apply your transform function before saving the value to the model. You can do validation on this
+     *       by throwing a BusinessException.
+     *  - ['col' => function($obj) { return $v; }] : this one is used to define new column not existing in the imported
+     *       file by an index value; but calculated from values of the eloquent associated values.
+     *       NB : The order is important. It has access on values defined above
+     *
+     * Don't set the id, it will be removed
+     *
+     * @param int $rowKey index of the row in the file
+     * @return array
+     */
+    abstract public function getColumnsSpec($rowKey);
+
+    /**
+     * An eloquent instance or a fluent class
+     *
+     * @return mixed|Model
+     */
+    abstract public function makeNewLineObject();
 }

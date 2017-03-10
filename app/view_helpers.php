@@ -69,3 +69,39 @@ if (!function_exists('show_date')) {
         else return $date->format($format);
     }
 }
+
+if (!function_exists('style_error')) {
+    /**
+     * @return string
+     */
+    function style_error($error)
+    {
+        if ($error != '') {
+            return sprintf('<span style="color: #CD5C5C; font-style: italic;" title="%s">%s</span>', $error, substr($error, 0, 30) . '....');
+        }
+        return $error;
+    }
+}
+
+if (!function_exists('is_paginator')) {
+    /**
+     * @param $obj
+     * @return bool
+     */
+    function is_paginator($obj)
+    {
+        return $obj instanceof \Illuminate\Contracts\Pagination\Paginator;
+    }
+}
+
+
+if (!function_exists('show_cents_as_euro')) {
+    /**
+     * @param int $cents
+     * @return string
+     */
+    function show_cents_as_euro($cents)
+    {
+        return \App\Business\Math\IntegerNumber::toFormattedFloat($cents, 2, ',');
+    }
+}

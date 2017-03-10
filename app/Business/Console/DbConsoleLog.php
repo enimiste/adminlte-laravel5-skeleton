@@ -9,6 +9,7 @@
 namespace App\Business\Console;
 
 
+use App\Business\Constants\CacheKeySuffixe;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Logging\Log as LogContract;
@@ -190,7 +191,7 @@ class DbConsoleLog implements LogContract, PsrLoggerInterface
     public function insert($type, $message, $loggable_type = null, $loggable_id = null)
     {
         try {
-            if ($loggable_id) \Cache::forget($loggable_id . '-log');
+            if ($loggable_id) \Cache::forget($loggable_id . CacheKeySuffixe::CONSOLE_LOG);
             
             $now = Carbon::now();
             $this->db->table('console_logs')

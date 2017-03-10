@@ -18,8 +18,12 @@ class CreateImportedFilesTable extends Migration
             $table->string('client_file_name');
             $table->unsignedInteger('accumulated_nbr_lines')->default(0);
             $table->unsignedInteger('accumulated_nbr_processed_lines')->default(0);
+            $table->unsignedInteger('accumulated_nbr_with_error_lines')->default(0);
             $table->string('state', 100);
             $table->string('importable_type', 50);
+
+            $table->boolean('simulated_file')->default(false)
+                ->comment('True, if the system creates files to simulate imports');
             $table->timestamps();
 
             $table->index('state');
