@@ -7,6 +7,18 @@
 */
 Route::group(['middleware' => 'auth'], function () {
 
+    /*
+    | User management
+    |--------------------------------------------------------------------------
+    |
+    */
+    Route::group(['prefix' => '/users'], function () {
+        Route::get('/', ['as' => 'users_list', 'uses' => 'UserController@index']);
+        Route::get('/logs', ['as' => 'users_logs', 'uses' => 'UserController@logs']);
+        Route::post('/', ['as' => 'users_add', 'uses' => 'UserController@store']);
+        Route::delete('/{id}', ['as' => 'users_delete', 'uses' => 'UserController@delete']);
+    });
+    
 });
 
 /*

@@ -15,8 +15,10 @@ class ImportedFileState implements ContantsInterface
 {
     use ConstantsTrait;
 
+    const FROM_MIGRATION_ON_GC = 'FROM_MIGRATION_ON_GC';
     const IMPORTING = 'IMPORTING';
     const IMPORTED = 'IMPORTED';
+    const WAITING_FOR_PROCESS = 'WAITING_FOR_PROCESS';
     const PROCESSING = 'PROCESSING';
     const ERROR_PROCESSING = 'ERROR_PROCESSING';
     const PROCESSED = 'PROCESSED';
@@ -29,6 +31,5 @@ class ImportedFileState implements ContantsInterface
      */
     public function doc()
     {
-        // TODO: Implement doc() method.
     }
 }

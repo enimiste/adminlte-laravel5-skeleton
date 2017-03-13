@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ConsoleLog;
 use Illuminate\Log\Writer;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,11 @@ class ModelServiceProvider extends ServiceProvider
         | To set the auth user
         |
         */
+        $this->app->bind(ConsoleLog::class, function () {
+            $e = new ConsoleLog();
+            $e->by_user = app('authenticated_user_email');
+            return $e;
+        });
 
     }
 

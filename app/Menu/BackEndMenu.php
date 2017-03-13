@@ -40,55 +40,32 @@ class BackEndMenu
          *   'displayChildren' => true,
          *  ]);
          */
-        $m1 = $menu->addChild('menu-item-1', [
-            'label' => 'Menu 1',
-            'uri' => route('home_page'),
+        $m3 = $menu->addChild('Utilisateurs', [
+            'uri' => '#',
             'extras' => [
-                'icon' => 'fa fa-files-o',
-                'current' => true,
+                'icon' => 'fa fa-users',
                 'routes' => [
-                    ['route' => 'home_page'],
+                    ['route' => 'users_list'],
+                    ['route' => 'users_logs'],
                 ]
             ]
         ]);
 
-        $m1->addChild('menu-item-11', [
-            'label' => 'Menu 11',
-            'uri' => route('home_page'),
+        $m3->addChild('Ajouter un nouvel user', [
+            'uri' => route('users_list'),
             'extras' => [
-                'icon' => 'fa fa-circle-o',
-                'current' => true,
+                'icon' => 'fa fa-user',
                 'routes' => [
-                    ['route' => 'home_page'],
                 ]
             ]
         ]);
 
-        $m1->addChild('menu-item-12', [
-            'label' => 'Menu 12',
-            'uri' => route('home_page'),
+        $m3->addChild('Historique des actions', [
+            'uri' => route('users_logs'),
             'extras' => [
-                'icon' => 'fa fa-circle-o',
+                'icon' => 'fa fa-user',
                 'routes' => [
-                    ['route' => 'home_page'],
                 ]
-            ]
-        ]);
-
-        $menu->addChild('Menu 2', [
-            'uri' => route('home_page'),
-            'extras' => [
-                'icon' => 'fa fa-files-o',
-            ]
-        ]);
-
-        $menu->addChild('Open in new tab', [
-            'uri' => route('home_page'),
-            'linkAttributes' => [
-                'target' => '_blank',
-            ],
-            'extras' => [
-                'icon' => 'fa fa-files-o',
             ]
         ]);
 

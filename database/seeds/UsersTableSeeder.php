@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = [
-            ['name' => 'Administrator', 'email' => 'admin@admin.com', 'password' => bcrypt('admin')],
+            ['name' => 'Administrator', 'email' => 'admin@contact.com', 'password' => bcrypt('admin'), 'deletable' => false],
         ];
         foreach ($users as $user) {
             if (\App\User::where('email', '=', $user['email'])->get()->isEmpty())

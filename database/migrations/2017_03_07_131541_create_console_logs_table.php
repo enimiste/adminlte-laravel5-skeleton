@@ -19,6 +19,7 @@ class CreateConsoleLogsTable extends Migration
             $table->string('message');
             $table->string('loggable_type')->nullable();
             $table->string('loggable_id')->nullable();
+            $table->string('by_user');
             $table->timestamps();
 
             $table->index('loggable_type');

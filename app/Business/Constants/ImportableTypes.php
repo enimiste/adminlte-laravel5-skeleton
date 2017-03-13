@@ -11,12 +11,12 @@ namespace App\Business\Constants;
 
 use App\Business\Constants\Traits\ConstantsTrait;
 
-class LoggableTypes implements ContantsInterface
+class ImportableTypes implements ContantsInterface
 {
     use ConstantsTrait;
 
-	const USER_MANAGEMENT = 'USER_MANAGEMENT';
-    //TODO
+    const CLIENT_FILES = 'CLIENT_FILES';
+    const PAIEMENT_FILES = 'PAIEMENT_FILES';
 
     /**
      * Classes implementing this interface should define only public constants

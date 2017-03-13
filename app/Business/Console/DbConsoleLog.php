@@ -10,6 +10,7 @@ namespace App\Business\Console;
 
 
 use App\Business\Constants\CacheKeySuffixe;
+use App\Models\ConsoleLog;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Logging\Log as LogContract;
@@ -192,17 +193,14 @@ class DbConsoleLog implements LogContract, PsrLoggerInterface
     {
         try {
             if ($loggable_id) \Cache::forget($loggable_id . CacheKeySuffixe::CONSOLE_LOG);
-            
-            $now = Carbon::now();
-            $this->db->table('console_logs')
-                ->insert([
-                    'type' => $type,
-                    'message' => $message,
-                    'loggable_type' => $loggable_type,
-                    'loggable_id' => $loggable_id,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+
+            /** @var ConsoleLog $e */
+            $e = app(ConsoleLog::class);
+            $e->type = $type;
+            $e->message = $message;
+            $e->loggable_type = $loggable_type;
+            $e->loggable_id = $loggable_id;
+            $e->save();
         } catch (\Exception $e) {
             //do nothing
         }

@@ -20,18 +20,9 @@ use App\Models\ImportedFile;
 use App\Models\ImportedFileLog;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
-use League\Csv\Reader;
 
-abstract class BaseImportCsvFileService implements BusinessInterface
+abstract class BaseImportFromArrayOfArrayService implements BusinessInterface
 {
-    /**
-     * @var
-     */
-    protected $delimiter;
-    /**
-     * @var string
-     */
-    protected $inputEncoding;
     /**
      * @var Connection
      */
@@ -50,39 +41,27 @@ abstract class BaseImportCsvFileService implements BusinessInterface
      * @param string $inputEncoding
      */
     public function __construct(Connection $db,
-                                TokenGeneratorInterface $tokenGenerator,
-                                $delimiter = ';',
-                                $inputEncoding = 'UTF-8')
+                                TokenGeneratorInterface $tokenGenerator)
     {
-        $this->delimiter = $delimiter;
-        $this->inputEncoding = $inputEncoding;
-
-        AssertThat::stringNotEmpty($delimiter, 'Delimiter should not be empty');
-        AssertThat::stringNotEmpty($inputEncoding, 'Input encoding should not be empty');
         $this->db = $db;
         $this->tokenGenerator = $tokenGenerator;
     }
 
 
     /**
-     * Import a csv file.
+     * Import an array of array.
      *
-     * @param string $filePath
      * @param string $clientFileName
      * @param bool $withHeaders
      * @return ImportedFile
      *
      * @throws BusinessImportException
      */
-    public function import($filePath, $clientFileName, $withHeaders = false)
+    public function import(array  $arrayOfArray, $clientFileName, $withHeaders = false)
     {
         try {
-            AssertThat::stringNotEmpty($filePath, 'File path should not be empty');
             AssertThat::stringNotEmpty($clientFileName, 'File name should not be empty');
-            /** @var Reader $reader */
-            $reader = Reader::createFromPath($filePath, 'r');
-            $reader->setDelimiter($this->delimiter);
-            $reader->setInputEncoding($this->inputEncoding);
+
 
             $this->db->beginTransaction();
             try {
@@ -100,21 +79,21 @@ abstract class BaseImportCsvFileService implements BusinessInterface
                 ImportedFileLog::log($file->id, $file->state);
 
                 $obj = $this;
-                $reader
-                    ->setOffset(boolval($withHeaders))//to ignore headers line
-                    ->each(function (array $row, $key) use ($file, $obj) {
-                        try {
-                            $obj->validateAndSaveLine($row, $key, $file->id);
+                if ($withHeaders) array_shift($arrayOfArray);
 
-                            $file->accumulated_nbr_lines++;
-                        } catch (BusinessException $e) {
-                            throw new BusinessException('Error at line ' . $key . ' : ' . $e->getMessage(), $e->getCode(), $e);
-                        } catch (\Exception $e) {
-                            throw new \Exception('Error at line ' . $key . ' : ' . $e->getMessage(), $e->getCode(), $e);
-                        }
+                $key = 0;
+                foreach ($arrayOfArray as $row) {
+                    try {
+                        $obj->validateAndSaveLine($row, $key, $file->id);
+                        $file->accumulated_nbr_lines++;
+                    } catch (BusinessException $e) {
+                        throw new BusinessException('Error at line ' . $key . ' : ' . $e->getMessage(), $e->getCode(), $e);
+                    } catch (\Exception $e) {
+                        throw new \Exception('Error at line ' . $key . ' : ' . $e->getMessage(), $e->getCode(), $e);
+                    }
 
-                        return true;//required by each function to continue iterating
-                    });
+                    $key++;
+                }
 
                 $file->state = ImportedFileState::IMPORTED;
                 $file->save();
@@ -132,7 +111,7 @@ abstract class BaseImportCsvFileService implements BusinessInterface
                 throw  $e;
             }
         } catch (\Exception $ex) {
-            throw new BusinessImportException($filePath, $ex->getMessage(), $ex->getCode(), $ex);
+            throw new BusinessImportException('import/from/array/of/arrays/' . $clientFileName, $ex->getMessage(), $ex->getCode(), $ex);
         }
     }
 
@@ -164,13 +143,11 @@ abstract class BaseImportCsvFileService implements BusinessInterface
                         $index = $map['rang'];
                         $transform = function ($d) use ($map) {
                             $v = call_user_func($map['transform'], $d);
-                            return is_string($v) ? trim($v) : $v;
+                            return trim($v);
                         };
                     } else {
                         $index = $map;
-                        $transform = function ($v) {
-                            return is_string($v) ? trim($v) : $v;
-                        };
+                        $transform = 'trim';
                     }
                     $val = array_nth($row, $index);
                     $line->$col = ($val == null) ? $val : call_user_func($transform, $val);
