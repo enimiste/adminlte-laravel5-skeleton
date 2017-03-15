@@ -15,8 +15,7 @@ class ImportableTypes implements ContantsInterface
 {
     use ConstantsTrait;
 
-    const CLIENT_FILES = 'CLIENT_FILES';
-    const PAIEMENT_FILES = 'PAIEMENT_FILES';
+    //TODO
 
     /**
      * Classes implementing this interface should define only public constants

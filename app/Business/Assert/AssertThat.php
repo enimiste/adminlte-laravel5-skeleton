@@ -70,6 +70,21 @@ class AssertThat extends BaseAssert
         }
     }
 
+    /**
+     * @param $value
+     * @param array $values
+     * @param string $message
+     */
+    public static function notIn($value, array $values, $message = '')
+    {
+        if (in_array($value, $values)) {
+            static::reportInvalidArgument(sprintf(
+                $message ?: 'Expected a value to not be in the array values. Got: %s',
+                static::valueToString($value)
+            ));
+        }
+    }
+
     public static function countGreaterThan($array, $number, $message = '')
     {
         static::greaterThan(
@@ -104,5 +119,35 @@ class AssertThat extends BaseAssert
             $number,
             $message ?: sprintf('Expected an array to contain <= %d elements. Got: %d.', $number, count($array))
         );
+    }
+
+    /**
+     * @param $value
+     * @param array $values
+     * @param string $message
+     */
+    public static function nullOrIn($value, array $values, $message = '')
+    {
+        if (is_null($value) || !in_array($value, $values)) {
+            static::reportInvalidArgument(sprintf(
+                $message ?: 'Expected a value to be null or in the array values. Got: %s',
+                static::valueToString($value)
+            ));
+        }
+    }
+
+    /**
+     * @param $value
+     * @param array $values
+     * @param string $message
+     */
+    public static function nullOrNotIn($value, array $values, $message = '')
+    {
+        if (is_null($value) || in_array($value, $values)) {
+            static::reportInvalidArgument(sprintf(
+                $message ?: 'Expected a value to br null or not be in the array values. Got: %s',
+                static::valueToString($value)
+            ));
+        }
     }
 }
