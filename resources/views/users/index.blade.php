@@ -99,10 +99,6 @@
                                 <td>{{ show_date_time($user->created_at) }}</td>
                                 <td>{{ show_date_time($user->updated_at) }}</td>
                                 <td>
-                                    <a href="{{ route('users_edit', ['id'=>$user->id]) }}"
-                                       title="Editer cet utilisateur">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
                                     @if($user->canDeleteUser())
                                         &nbsp;
                                         <a href="#" style="color: #FF0000"
