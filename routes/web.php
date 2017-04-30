@@ -7,6 +7,9 @@
 */
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/', ['as' => 'home_page', 'uses' => 'DefaultController@index']);
+    Route::get('/home', ['uses' => 'DefaultController@index']);
+
     /*
     | User management
     |--------------------------------------------------------------------------
@@ -18,7 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/', ['as' => 'users_add', 'uses' => 'UserController@store']);
         Route::delete('/{id}', ['as' => 'users_delete', 'uses' => 'UserController@delete']);
     });
-    
+
 });
 
 /*
@@ -26,8 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
 |--------------------------------------------------------------------------
 |
 */
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', ['as' => 'home_page', 'uses' => 'DefaultController@index']);
+Route::group([], function () {
+
 });
 
 /*
