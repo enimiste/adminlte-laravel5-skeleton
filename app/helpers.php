@@ -58,3 +58,16 @@ if (!function_exists('add_if_macosx')) {
     }
 }
 
+if (! function_exists('logs_path')) {
+    /**
+     * Get the path to the storage/logs folder.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function logs_path($path = '')
+    {
+        return app('path.storage'). DIRECTORY_SEPARATOR . 'logs' . ($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
