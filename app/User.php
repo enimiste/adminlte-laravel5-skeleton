@@ -42,4 +42,12 @@ class User extends Authenticatable
     {
         return $this->deletable;
     }
+
+    /**
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return [];
+    }
 }

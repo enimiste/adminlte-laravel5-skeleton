@@ -99,3 +99,20 @@ if (!function_exists('move_from_fs_to_temp_file')) {
     }
 }
 
+
+if (!function_exists('can_i')) {
+    /**
+     * @param string $permission_code
+     * @return bool
+     */
+    function can_i($permission_code)
+    {
+        if (!env('ENABLE_API_AUTH', false) Or !env('ENABLE_AUTHORISATION', true))
+            return true;
+        else {
+            $user = \Auth::user();
+            $permissions = $user->getPermissions();
+            return $permissions->contains($permission_code);
+        }
+    }
+}

@@ -14,7 +14,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\JsonResponse;
 use Org\Asso\Model\Events\HistoriqueDemandeAnnulationParticip;
-use Org\Asso\User;
+use App\User;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\JWTAuth;
@@ -53,7 +53,7 @@ class JWTAuthenticateApi
     public function handle($request, Closure $next)
     {
         $uri = $request->getRequestUri();
-        if (env('ENABLE_AUTH', true)) {
+        if (env('ENABLE_API_AUTH', true)) {
             if (!$token = $this->auth->setRequest($request)->getToken()) {
                 \Log::error('JWT Middleware : Token not provided : ' . $uri);
                 return $this->respond('notrasso.jwt.token_not_provided', 'Token not provided', 400);
