@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('archytas:load-create-scraped-produitssoldes')
         //    ->everyTenMinutes()
         //    ->withoutOverlapping()
-        //    ->appendOutputTo(storage_path('logs/archytas-load-create-scraped-produits-soldes.log'));
+        //    ->appendOutputTo(logs_path('archytas-load-create-scraped-produits-soldes.log'));
     }
 
     /**
