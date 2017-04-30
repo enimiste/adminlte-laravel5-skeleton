@@ -9,7 +9,7 @@
 namespace App\Business\Constants;
 
 
-interface ContantsInterface
+interface ConstantsInterface
 {
 
     /**

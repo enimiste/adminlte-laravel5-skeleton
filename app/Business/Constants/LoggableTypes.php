@@ -11,7 +11,7 @@ namespace App\Business\Constants;
 
 use App\Business\Constants\Traits\ConstantsTrait;
 
-class LoggableTypes implements ContantsInterface
+class LoggableTypes implements ConstantsInterface
 {
     use ConstantsTrait;
 

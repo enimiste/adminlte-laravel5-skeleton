@@ -11,7 +11,7 @@ namespace App\Business\Constants;
 
 use App\Business\Constants\Traits\ConstantsTrait;
 
-class ImportedLineState implements ContantsInterface
+class ImportedLineState implements ConstantsInterface
 {
     use ConstantsTrait;
 
