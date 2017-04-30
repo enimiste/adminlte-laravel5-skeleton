@@ -6,10 +6,10 @@
  * Time: 10:22
  */
 
-namespace Org\Asso\Business\File;
+namespace App\Business\File;
 
 
-use Org\Asso\Business\Contracts\File\FileWriterInterface;
+use App\Business\Contracts\File\FileWriterInterface;
 
 class PHPFileWriter implements FileWriterInterface {
 

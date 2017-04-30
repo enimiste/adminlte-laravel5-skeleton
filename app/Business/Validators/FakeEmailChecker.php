@@ -6,7 +6,7 @@
  * Time: 11:51
  */
 
-namespace Org\Asso\Business\Validators;
+namespace App\Business\Validators;
 
 
 use Monad\Option;

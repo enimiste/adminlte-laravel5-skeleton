@@ -6,10 +6,9 @@
  * Time: 22:13
  */
 
-namespace Org\Asso\ModelSerializer\Formatters;
+namespace App\ModelSerializer\Formatters;
 
-
-use Org\Asso\Business\Contracts\Serialization\Formatter\FormatterInterface;
+use App\Business\Contracts\Serialization\Formatter\FormatterInterface;
 
 class BooleanFormatter implements FormatterInterface {
 

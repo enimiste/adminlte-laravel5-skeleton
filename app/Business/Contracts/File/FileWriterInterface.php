@@ -6,7 +6,7 @@
  * Time: 10:19
  */
 
-namespace Org\Asso\Business\Contracts\File;
+namespace App\Business\Contracts\File;
 
 
 interface FileWriterInterface

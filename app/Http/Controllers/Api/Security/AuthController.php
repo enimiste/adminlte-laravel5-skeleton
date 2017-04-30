@@ -6,17 +6,13 @@
  * Time: 20:08
  */
 
-namespace Org\Asso\Http\Controllers\Api\Security;
+namespace App\Http\Controllers\Api\Security;
 
 
+use App\Business\Exception\BusinessException;
+use App\Http\Controllers\Api\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Org\Asso\Annotations\ApiDoc;
-use Org\Asso\Business\Exception\BusinessException;
-use Org\Asso\Http\Controllers\Controller;
-use Org\Asso\Model\Security\Permission;
-use Org\Asso\Model\Security\ProfilMetier;
-use Org\Asso\User;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
 
@@ -58,18 +54,11 @@ class AuthController extends Controller
             if (!$token = $jWTAuth->attempt($credentials))
                 throw new BusinessException('invalid_credentials');
 
-            /** @var ProfilMetier $profil */
-            $profil = $jWTAuth->toUser($token)->profilMetier;
-            $permissions = $profil->permissions->map(function (Permission $p) {
-                return $p->code;
-            });
-            \Log::info('User ' . $credentials['email'] . ' authenticated successfully with ' . $permissions->count() . ' permissions.');
             return new JsonResponse(
                 [
                     'data' => [
                         'token' => $token,
-                        'permissions' => $permissions,
-                        'profil_metier' => $profil->code
+                        'permissions' => [],
                     ]
                 ], 200
             );

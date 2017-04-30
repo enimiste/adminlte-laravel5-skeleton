@@ -6,13 +6,13 @@
  * Time: 14:38
  */
 
-namespace Org\Asso\ModelSerializer\Formatters;
+namespace App\ModelSerializer\Formatters;
 
 
+use App\Business\Assert\AssertThat;
+use App\Business\Contracts\Serialization\Formatter\FormatterInterface;
+use App\Business\Exception\BusinessException;
 use Enimiste\Math\VO\Number;
-use Org\Asso\Assert\Assert;
-use Org\Asso\Business\Contracts\Serialization\Formatter\FormatterInterface;
-use Org\Asso\Business\Exception\BusinessException;
 
 class DecimalFormatter implements FormatterInterface
 {
@@ -26,8 +26,8 @@ class DecimalFormatter implements FormatterInterface
      */
     public function setPrecision($precision = 2)
     {
-        Assert::integer($precision);
-        Assert::greaterThanEq($precision, 0);
+        AssertThat::integer($precision);
+        AssertThat::greaterThanEq($precision, 0);
         $this->precision = $precision;
     }
 

@@ -6,14 +6,12 @@
  * Time: 20:34
  */
 
-namespace Org\Asso\Http\Middleware;
+namespace App\Http\Middleware;
 
 
 use Closure;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\JsonResponse;
-use Org\Asso\Model\Events\HistoriqueDemandeAnnulationParticip;
 use App\User;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;

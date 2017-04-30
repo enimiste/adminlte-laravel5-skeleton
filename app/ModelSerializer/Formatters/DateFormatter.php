@@ -6,12 +6,13 @@
  * Time: 14:44
  */
 
-namespace Org\Asso\ModelSerializer\Formatters;
+namespace App\ModelSerializer\Formatters;
 
 
-use Org\Asso\Assert\Assert;
-use Org\Asso\Business\Contracts\Serialization\Formatter\FormatterInterface;
-use Org\Asso\Business\Exception\BusinessException;
+
+use App\Business\Assert\AssertThat;
+use App\Business\Contracts\Serialization\Formatter\FormatterInterface;
+use App\Business\Exception\BusinessException;
 
 class DateFormatter implements FormatterInterface
 {
@@ -24,7 +25,7 @@ class DateFormatter implements FormatterInterface
      */
     public function setFormat($format = 'd-m-Y')
     {
-        Assert::string($format);
+        AssertThat::string($format);
         $this->format = $format;
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\JWTAuthenticateApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Org\Asso\Http\Middleware\JWTAuthenticateApi;
 
 class Kernel extends HttpKernel
 {

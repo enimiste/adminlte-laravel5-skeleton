@@ -6,11 +6,10 @@
  * Time: 12:32
  */
 
-namespace Org\Asso\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 
 use App\Business\Assert\AssertThat;
-use App\Http\Controllers\Api\Controller;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Response;

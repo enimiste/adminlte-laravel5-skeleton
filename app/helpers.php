@@ -6,10 +6,10 @@
  * Time: 14:47
  */
 
+use App\Business\Contracts\File\FileWriterInterface;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Debug\Dumper;
-use Org\Asso\Business\Contracts\File\FileWriterInterface;
 
 if (!function_exists('dd_multi')) {
     /**

@@ -5,7 +5,7 @@
  * Date: 02/04/17
  * Time: 11:53
  */
-namespace Org\Asso\Business\Validators;
+namespace App\Business\Validators;
 
 interface FakeEmailCheckerInterface
 {
