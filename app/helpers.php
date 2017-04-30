@@ -6,7 +6,10 @@
  * Time: 14:47
  */
 
+use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Debug\Dumper;
+use Org\Asso\Business\Contracts\File\FileWriterInterface;
 
 if (!function_exists('dd_multi')) {
     /**
@@ -68,6 +71,31 @@ if (! function_exists('logs_path')) {
     function logs_path($path = '')
     {
         return app('path.storage'). DIRECTORY_SEPARATOR . 'logs' . ($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
+if (!function_exists('move_from_fs_to_temp_file')) {
+    /**
+     * @param Filesystem $fs
+     * @param string $fsPath
+     * @return string temp file path
+     */
+    function move_from_fs_to_temp_file(Filesystem $fs, $fsPath)
+    {
+        /** @var Repository $cache */
+        $cache = app(Repository::class);
+
+        $tmpDir = sys_get_temp_dir();
+        //$tmpFile = $tmpDir . DIRECTORY_SEPARATOR . random_int(1, 1000) . '_' . time() . '.' . basename($fsPath);
+
+        $key = $tmpDir . DIRECTORY_SEPARATOR . sha1(serialize($fs) . $fsPath) . '_' . basename($fsPath);
+        if (!file_exists($key)) {
+            /** @var FileWriterInterface $fileWriter */
+            $fileWriter = app(FileWriterInterface::class);
+            $fileWriter->setContents($key, $fs->get($fsPath), false);
+        }
+
+        return $key;
     }
 }
 
