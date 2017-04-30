@@ -190,6 +190,13 @@ abstract class BaseImportFromArrayOfArrayService implements BusinessInterface
 
     /**
      * An eloquent instance or a fluent class
+     * This object should have at minimum this structure :
+     *    - attributes :
+     *       - id : string
+     *       - state : string
+     *       - imported_file_id : string
+     *    - methods :
+     *       - save(array $options) : bool
      *
      * @return mixed|Model
      */
