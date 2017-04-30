@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::post('/auth/login', [
+    'as' => 'auth_login',
+    'uses' => 'Api\Security\AuthController@authenticate'
+]);
+
+Route::get('/auth/logout', [
+    'middleware' => 'nickel.jwt.auth',
+    'as' => 'auth_logout',
+    'uses' => 'Api\Security\AuthController@logout'
+]);
