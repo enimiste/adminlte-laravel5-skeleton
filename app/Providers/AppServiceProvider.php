@@ -11,6 +11,11 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Business\Contracts\TokenGeneratorInterface;
 use App\Business\Generators\RamseyUuidTokenGenerator;
+use Org\Asso\Business\Validators\FakeEmailChecker;
+use Org\Asso\Business\Validators\FakeEmailCheckerInterface;
+use Org\Asso\ModelSerializer\Formatters\DateFormatter;
+use Org\Asso\ModelSerializer\Formatters\DateTimeFormatter;
+use Org\Asso\ModelSerializer\Formatters\DecimalFormatter;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -100,6 +105,40 @@ class AppServiceProvider extends ServiceProvider
                     return 'SYSTEM';
                 else return 'NOT_AUTHENTICATED';
             }
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Formatters
+        |--------------------------------------------------------------------------
+        |
+        */
+        $this->app->bind(DateFormatter::class, function () {
+            $dateFormatter = new DateFormatter();
+            $dateFormatter->setFormat(config('common.date_format'));
+            return $dateFormatter;
+        });
+
+        $this->app->bind(DateTimeFormatter::class, function () {
+            $dateTimeFormatter = new DateTimeFormatter();
+            $dateTimeFormatter->setFormat(config('common.date_time_format'));
+            return $dateTimeFormatter;
+        });
+
+        $this->app->bind(DecimalFormatter::class, function () {
+            $decimalFormetter = new DecimalFormatter();
+            $decimalFormetter->setPrecision(2);
+            return $decimalFormetter;
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Data checkers
+        |--------------------------------------------------------------------------
+        |
+        */
+        $this->app->singleton(FakeEmailCheckerInterface::class, function () {
+            return new FakeEmailChecker([]);
         });
 
         /*
