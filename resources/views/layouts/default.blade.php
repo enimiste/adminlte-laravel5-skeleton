@@ -65,7 +65,7 @@ desired effect
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>M</b>A</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Mon</b>App</span>
+            <span class="logo-lg">{!! env('APP_NAME', '<b>Mon</b>App') !!}</span>
         </a>
 
         <!-- Header Navbar -->
