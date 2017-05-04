@@ -168,6 +168,9 @@ return [
          */
         Lord\Laroute\LarouteServiceProvider::class,
         Dowilcox\KnpMenu\MenuServiceProvider::class,
+        Enimiste\L5Math\Providers\L5MathServiceProvider::class,
+        Intervention\Image\ImageServiceProviderLaravel5::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
          * Application Service Providers...
