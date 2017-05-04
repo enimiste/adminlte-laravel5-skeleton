@@ -93,8 +93,10 @@ abstract class Controller extends BaseController
      */
     protected function error5xx(array $errors, \Exception $ex = null, $code = 500)
     {
-        if ($ex != null)
+        if ($ex != null){
+            \Log::error($ex->getMessage());
             \Log::error($ex->getTraceAsString());
+        }
 
         return new JsonResponse(
             [

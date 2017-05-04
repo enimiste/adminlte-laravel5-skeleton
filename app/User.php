@@ -48,6 +48,6 @@ class User extends Authenticatable
      */
     public function getPermissions()
     {
-        return [];
+        return collect();
     }
 }
