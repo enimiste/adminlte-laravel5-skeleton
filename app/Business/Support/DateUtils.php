@@ -15,7 +15,7 @@ class DateUtils
 {
 
     /**
-     * @param int $nbr
+     * @param Carbon $date
      * @return Carbon
      */
     public static function addMonth(Carbon $date)
