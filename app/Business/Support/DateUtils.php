@@ -23,9 +23,8 @@ class DateUtils
         /** @var Carbon $date_ */
         $date_ = $date->copy()->day(1);
         $month = $date_->month;
-        if ($month == 1) $date_->month(2)
-            ->lastOfMonth();
-        else $date_->addMonth(1)->lastOfMonth();
+        if ($month == 1) $date_->month(2);
+        else $date_->addMonth(1);
 
         $date_->setTime($date->hour, $date->minute, $date->second);
 
